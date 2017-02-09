@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Routeplaner</string>
+    <string name="form_header_text">Create an Route</string>
+    <string name="form_input_hint">Enter an Address</string>
+    <string name="form_submit_btn">Add Address to Route</string>
+    <string name="form_calculate_btn">Calculate shortest Route</string>
+</resources>
