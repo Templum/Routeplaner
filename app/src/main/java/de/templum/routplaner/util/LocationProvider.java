@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Date;
@@ -15,6 +16,9 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
 
 
 /**
@@ -24,63 +28,57 @@ import io.reactivex.Observer;
 public class LocationProvider {
     private Geocoder mGeocode;
     private LocationManager mLocationManager;
+    private Observer<String> mInputObserver;
+    private PublishSubject<Location> mSuggestionStream;
+    private Disposable mSubscription;
 
     public LocationProvider(Context ctx) {
         mGeocode = new Geocoder(ctx);
         mLocationManager = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
+        mInputObserver = new InputObserver();
+        mSuggestionStream = PublishSubject.create();
     }
 
-    public Observable<Location> searchByAddress(final String address) {
-        return new Observable<Location>() {
-            @Override
-            protected void subscribeActual(Observer<? super Location> observer) {
-                try {
-                    List<Address> findings = mGeocode.getFromLocationName(address, 10);
-                    for (Address found : findings) {
-                        Location location = new Location(address);
-                        location.setLatitude(found.getLatitude());
-                        location.setLongitude(found.getLongitude());
-                        location.setTime(new Date().getTime());
-                        observer.onNext(location);
-                    }
-                    observer.onComplete();
-                } catch (IOException e) {
-                    observer.onError(e);
-                }
-
+    private void searchByAddress(final String address) {
+        try {
+            List<Address> findings = mGeocode.getFromLocationName(address, 10);
+            for (Address found : findings) {
+                Location location = new Location(address);
+                location.setLatitude(found.getLatitude());
+                location.setLongitude(found.getLongitude());
+                location.setTime(new Date().getTime());
+                mSuggestionStream.onNext(location);
             }
-        };
+        } catch (IOException e) {}
     }
 
-    public Observable<Location> searchByPosition() {
-        return new Observable<Location>() {
-            @Override
-            protected void subscribeActual(final Observer<? super Location> observer) {
-                final LocationListener locationListener = new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        observer.onNext(location);
-                        observer.onComplete();
-                    }
+    public Observable<Location> registerInputObserver(Observable<String> inputEvent){
+        if(mSubscription != null) mSubscription.dispose();
+        inputEvent.observeOn(Schedulers.computation()).subscribe(mInputObserver);
+        return mSuggestionStream;
+    }
 
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-                    }
+    public void unregisterInputObserver(){
+        if(mSubscription != null) mSubscription.dispose();
+    }
 
-                    @Override
-                    public void onProviderEnabled(String provider) {
-                    }
+    private class InputObserver implements Observer<String>{
 
-                    @Override
-                    public void onProviderDisabled(String provider) {
-                    }
-                };
-                try {
-                    mLocationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationListener, Looper.myLooper());
-                }catch (SecurityException e){
-                    observer.onError(e); //TODO: Later Use an Runtime Library like dexter to check
-                }
-            }
-        };
+        @Override
+        public void onSubscribe(Disposable d) {
+            mSubscription = d;
+        }
+
+        @Override
+        public void onNext(String value) {
+            Log.d("Test", "Value: " + value);
+            searchByAddress(value);
+        }
+
+        @Override
+        public void onError(Throwable e) {}
+
+        @Override
+        public void onComplete() {}
     }
 }
