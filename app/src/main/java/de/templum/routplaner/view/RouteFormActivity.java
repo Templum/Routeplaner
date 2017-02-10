@@ -22,7 +22,12 @@ import butterknife.OnTextChanged;
 import de.templum.routplaner.R;
 import de.templum.routplaner.model.RoutePoint;
 import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.internal.operators.observable.ObservableFromPublisher;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
 
 public class RouteFormActivity extends AppCompatActivity {
 
@@ -32,7 +37,7 @@ public class RouteFormActivity extends AppCompatActivity {
     AutoCompleteTextView mInput;
 
     private List<RoutePoint> mRoute;
-    private Observable<String> mInputEvent = null;
+    private final PublishSubject<String> mInputEvent = PublishSubject.create();
 
 
     @Override
@@ -42,8 +47,7 @@ public class RouteFormActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         // Maybe restore old state
         mList.setLayoutManager(new LinearLayoutManager(this));
-
-        afterEmailInput(mInput.getEditableText()); // Hacker gonna Hack
+        inputTest();
     }
 
     @OnClick(R.id.form_submit)
@@ -54,15 +58,33 @@ public class RouteFormActivity extends AppCompatActivity {
 
     @OnTextChanged(value = R.id.form_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterEmailInput(final Editable editable) {
-        if(mInputEvent == null) mInputEvent = new ObservableFromPublisher<>(new Publisher<String>() {
-            @Override
-            public void subscribe(Subscriber<? super String> s) {
-                s.onNext(editable.toString());
-            }
-        }).throttleWithTimeout(5, TimeUnit.SECONDS);
+        mInputEvent.onNext(editable != null ? editable.toString() : "");
     }
 
-    public Observable<String> registerInputListener(){
-        return mInputEvent;
+
+    private void inputTest(){
+        mInputEvent
+                .throttleWithTimeout(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(String value) {
+                Toast.makeText(RouteFormActivity.this, value, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }
