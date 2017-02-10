@@ -25,6 +25,7 @@
         android:layout_below="@id/form_header"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:completionThreshold="2"
         android:hint="@string/form_input_hint"/>
     <Button
         android:id="@+id/form_submit"
