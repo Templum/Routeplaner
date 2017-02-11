@@ -18,28 +18,20 @@
         android:text="@string/form_header_text"
         android:textSize="25sp"/>
 
-    <AutoCompleteTextView
-        android:id="@+id/form_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/form_header"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:completionThreshold="2"
-        android:hint="@string/form_input_hint"/>
-    <Button
-        android:id="@+id/form_submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/form_input"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:text="@string/form_submit_btn"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/form_route_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/form_submit"
-        android:layout_marginTop="@dimen/activity_vertical_margin" />
+        android:layout_below="@id/form_header"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+    <Button
+        android:id="@+id/form_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/form_route_list"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:text="@string/form_submit_btn"/>
 
 </RelativeLayout>
