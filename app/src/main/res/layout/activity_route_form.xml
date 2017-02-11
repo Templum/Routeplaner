@@ -30,8 +30,9 @@
         android:id="@+id/form_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/form_route_list"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_alignParentBottom="true"
+        android:theme="@style/AppTheme"
         android:text="@string/form_submit_btn"/>
 
 </RelativeLayout>

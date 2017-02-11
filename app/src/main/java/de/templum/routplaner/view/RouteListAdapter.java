@@ -58,7 +58,7 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.Rout
 
     @Override
     public int getItemViewType(int position) {
-        return (position == 0 || position == mData.size() -1) ? START_OR_END : STATION;
+        return (position == 0) ? START_OR_END : STATION;
     }
 
     @UiThread
