@@ -2,7 +2,6 @@ package de.templum.routplaner.computing.climber;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import de.templum.routplaner.computing.RouteCalculator;
 import de.templum.routplaner.model.RoutePoint;

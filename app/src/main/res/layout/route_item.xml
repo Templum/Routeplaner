@@ -4,7 +4,11 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="4dp">
+    android:layout_marginTop="@dimen/small_vertical_margin"
+    android:layout_marginBottom="@dimen/small_vertical_margin"
+    android:background="@color/cardview_dark_background"
+    card_view:cardElevation="3dp"
+    card_view:cardCornerRadius="5dp">
     <RelativeLayout
         android:id="@+id/card_view"
         android:layout_gravity="center"
@@ -13,12 +17,13 @@
 
         <ImageView
             android:id="@+id/route_item_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:src="@drawable/icon_station"
             android:layout_centerVertical="true"/>
 
         <TextView
@@ -26,7 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="21sp"
+            android:textSize="18sp"
+            android:text="Sample Streen Name"
             android:layout_toEndOf="@+id/route_item_icon"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

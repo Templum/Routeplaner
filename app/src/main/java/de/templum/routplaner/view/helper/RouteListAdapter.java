@@ -1,4 +1,4 @@
-package de.templum.routplaner.view;
+package de.templum.routplaner.view.helper;
 
 import android.content.Context;
 import android.support.annotation.UiThread;

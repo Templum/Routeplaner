@@ -2,36 +2,24 @@ package de.templum.routplaner.view;
 
 
 import android.content.Intent;
-import android.support.annotation.UiThread;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.Toast;
-
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 import de.templum.routplaner.R;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.PublishSubject;
+import de.templum.routplaner.view.helper.RouteListAdapter;
+
 
 public class RouteFormActivity extends AppCompatActivity {
 
@@ -59,7 +47,7 @@ public class RouteFormActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.form_submit)
+    @OnClick(R.id.form_fab_add)
     public void addLocation() {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
@@ -69,10 +57,16 @@ public class RouteFormActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.form_submit)
+    public void calculateRoute(){
+        Toast.makeText(this,"Calculating Route", Toast.LENGTH_SHORT).show();
+    }
+
 
     private void initialiseRouteList() {
         mAdapter = new RouteListAdapter(this);
         mList.setLayoutManager(new LinearLayoutManager(this));
         mList.setAdapter(mAdapter);
+        mList.setHasFixedSize(true);
     }
 }

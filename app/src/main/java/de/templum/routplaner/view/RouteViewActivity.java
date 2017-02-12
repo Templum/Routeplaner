@@ -1,7 +1,7 @@
 package de.templum.routplaner.view;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import de.templum.routplaner.R;
 

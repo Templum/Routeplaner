@@ -1,38 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="de.templum.routplaner.view.RouteFormActivity">
 
-    <TextView
-        android:id="@+id/form_header"
+    tools:context="de.templum.routplaner.view.RouteFormActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:text="@string/form_header_text"
-        android:textSize="25sp"/>
+        android:layout_height="64dp"
+        android:background="@color/divider">
+        <TextView
+            android:id="@+id/form_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_centerVertical="true"
+            android:text="@string/form_header_text"
+            android:textAlignment="center"
+            android:textSize="23sp" />
+    </RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/form_route_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/form_header"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+        android:layout_below="@+id/header"
+        android:layout_above="@+id/form_submit_container"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
 
+<RelativeLayout
+    android:id="@+id/form_submit_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/divider">
     <Button
         android:id="@+id/form_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_alignParentBottom="true"
-        android:theme="@style/AppTheme"
-        android:text="@string/form_submit_btn"/>
+        android:text="@string/form_submit_btn"
+        android:theme="@style/AppTheme" />
+</RelativeLayout>
+
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/form_fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_add"
+        android:elevation="4dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@id/header"
+        android:layout_marginBottom="-30dp"
+        android:layout_marginEnd="20dp"/>
 
 </RelativeLayout>
