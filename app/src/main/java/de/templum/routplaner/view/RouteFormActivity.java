@@ -3,12 +3,12 @@ package de.templum.routplaner.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.widget.Toast;
-
+import android.widget.RelativeLayout;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
@@ -26,6 +26,9 @@ public class RouteFormActivity extends AppCompatActivity {
     @Bind(R.id.form_route_list)
     RecyclerView mList;
 
+    @Bind(R.id.form_submit_container)
+    RelativeLayout mBottom;
+
     private RouteListAdapter mAdapter;
 
     @Override
@@ -40,9 +43,10 @@ public class RouteFormActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 10) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getAddress());
-                mAdapter.addItem(toastMsg);
+                Place place = PlacePicker.getPlace(this,data);
+                mAdapter.addItem(place.getAddress().toString());
+            }else{
+                Snackbar.make(mBottom,R.string.error_something_went_wrong, BaseTransientBottomBar.LENGTH_LONG).show();
             }
         }
     }
@@ -53,13 +57,15 @@ public class RouteFormActivity extends AppCompatActivity {
         try {
             startActivityForResult(builder.build(this), 10);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
+            Snackbar.make(mBottom,R.string.error_google_places_not_reachable, BaseTransientBottomBar.LENGTH_LONG).show();
         }
     }
 
     @OnClick(R.id.form_submit)
     public void calculateRoute(){
-        Toast.makeText(this,"Calculating Route", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, RouteViewActivity.class);
+        intent.putStringArrayListExtra(RouteViewActivity.ROUTE_LIST, mAdapter.getData());
+        startActivity(intent);
     }
 
 

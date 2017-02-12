@@ -7,23 +7,19 @@ import android.location.Location;
  */
 public class RoutePoint {
     private Location mLocation;
-    private Boolean mIsStart;
+    private String mAddress;
 
-    public RoutePoint(Location location, Boolean isStart) {
+    public RoutePoint(Location location, String address) {
         mLocation = location;
-        mIsStart = isStart;
+        mAddress = address;
     }
 
     public Location getLocation() {
         return mLocation;
     }
 
-    public Boolean getIsStart() {
-        return mIsStart;
-    }
-
     @Override
     public String toString() {
-        return "RoutePoint: " + mLocation.getProvider(); //TODO: Maybe Wrong Update if needed
+        return mAddress;
     }
 }

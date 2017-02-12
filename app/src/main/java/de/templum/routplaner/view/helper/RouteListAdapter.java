@@ -23,7 +23,7 @@ import de.templum.routplaner.R;
 
 public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.RouteItem> {
 
-    private List<String> mData;
+    private ArrayList<String> mData;
     private Context mCtx;
     private final int START_OR_END = 0;
     private final int STATION = 1;
@@ -66,6 +66,10 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.Rout
         int insert = mData.size();
         mData.add(item);
         notifyItemInserted(insert);
+    }
+
+    public ArrayList<String> getData(){
+        return mData;
     }
 
     public class RouteItem extends RecyclerView.ViewHolder{

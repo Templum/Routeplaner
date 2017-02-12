@@ -1,5 +1,8 @@
 package de.templum.routplaner.computing;
 
+import android.content.Context;
+import android.location.Location;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +11,8 @@ import de.templum.routplaner.computing.climber.HillClimberRouteCalculator;
 import de.templum.routplaner.computing.genetic.GeneticRouteCalculator;
 import de.templum.routplaner.model.RoutePoint;
 import de.templum.routplaner.util.Helper;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 /**
  * Created by simon on 08.02.2017.
@@ -15,11 +20,12 @@ import de.templum.routplaner.util.Helper;
 
 public class RouteFactory {
     private final String TAG = RouteFactory.class.getSimpleName();
-    private static RouteFactory mInstance = new RouteFactory();
 
+    private final Context mCtx;
     private List<RouteCalculator> mAlgorithms;
 
-    private RouteFactory(){
+    public RouteFactory(final Context ctx){
+        mCtx = ctx;
         mAlgorithms = new ArrayList<>();
 
         // Adding our available Algorithms
@@ -28,15 +34,20 @@ public class RouteFactory {
         mAlgorithms.add(new GeneticRouteCalculator());
     }
 
-    public static RouteFactory getInstance(){return mInstance;}
+    public List<RoutePoint> calculateRoute(List<String> route){
 
-    public List<RoutePoint> calculateRoute(List<RoutePoint> route){
+        List<RoutePoint> initialRoute = new ArrayList<>();
 
-        List<RoutePoint> bestRoute = route;
+        for (String address : route) {
+            Location location = Helper.searchBy(mCtx, address);
+            if(location != null) initialRoute.add(new RoutePoint(location, location.getProvider()));
+        }
+
+        List<RoutePoint> bestRoute = initialRoute;
 
         for (RouteCalculator algorithm : mAlgorithms) {
             List<RoutePoint> calculatedRoute = algorithm.calculate(new ArrayList<>(bestRoute));
-            if(Helper.calculateRouteLength(bestRoute) < Helper.calculateRouteLength(calculatedRoute)){
+            if(calculatedRoute != null && Helper.calculateRouteLength(bestRoute) < Helper.calculateRouteLength(calculatedRoute)){
                 bestRoute = calculatedRoute;
             }
         }

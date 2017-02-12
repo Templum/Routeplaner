@@ -1,5 +1,11 @@
 package de.templum.routplaner.util;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -43,5 +49,25 @@ public class Helper {
     }
     public static Double calculateInverseDistance(List<RoutePoint> route){
         return  -1 * Helper.calculateRouteLength(route);
+    }
+    public static Location searchBy(Context ctx, String addressAsString){
+        Geocoder geocoder = new Geocoder(ctx);
+
+        try {
+            List<Address> findings = geocoder.getFromLocationName(addressAsString, 10);
+
+            if(findings.size() >= 1){
+                Address address = findings.get(0);
+                Location location = new Location(addressAsString);
+                location.setLatitude(address.getLatitude());
+                location.setLongitude(address.getLongitude());
+                return location;
+            }else{
+                return null;
+            }
+
+        } catch (IOException e) {
+            return null;
+        }
     }
 }
