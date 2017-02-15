@@ -14,6 +14,11 @@ public class RoutePoint {
         mAddress = address;
     }
 
+    public RoutePoint(RoutePoint routePoint) {
+        mLocation = routePoint.getLocation();
+        mAddress = routePoint.toString();
+    }
+
     public Location getLocation() {
         return mLocation;
     }

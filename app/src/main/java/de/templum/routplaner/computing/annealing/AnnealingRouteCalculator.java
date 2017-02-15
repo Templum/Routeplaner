@@ -1,5 +1,7 @@
 package de.templum.routplaner.computing.annealing;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,25 +18,27 @@ public class AnnealingRouteCalculator implements RouteCalculator {
 
     private final Double EPSILON = 0.001;
     private Double TEMPERATURE = 1538.0; //TODO: Search a better Temperature
+    private final String TAG = AnnealingRouteCalculator.class.getCanonicalName();
 
     //TODO: Start multiple attempts
-    public AnnealingRouteCalculator(){}
+    public AnnealingRouteCalculator() {
+    }
 
     @Override
     public List<RoutePoint> calculate(List<RoutePoint> initialRoute) {
         Double bestFitness = Helper.calculateInverseDistance(initialRoute);
         List<RoutePoint> savedState;
 
-        while(TEMPERATURE > EPSILON){
+        while (TEMPERATURE > EPSILON) {
             savedState = new ArrayList<>(initialRoute);
             Helper.swapRandomPoints(initialRoute);
 
             Double currentFitness = Helper.calculateInverseDistance(initialRoute);
 
-            if( currentFitness > bestFitness || checkForCoolingStep(-currentFitness, -bestFitness)){ //TODO: Maybe remove - here and in Math.exp -
+            if (currentFitness > bestFitness || checkForCoolingStep(currentFitness, bestFitness)) {
                 // No need for restoring state, update the bestFitness
                 bestFitness = currentFitness;
-            }else{
+            } else {
                 // Restore the old route
                 initialRoute = savedState;
             }
@@ -43,7 +47,7 @@ public class AnnealingRouteCalculator implements RouteCalculator {
         return initialRoute;
     }
 
-    private Boolean checkForCoolingStep(Double currentFitness, Double lastFitness){
-        return  new Random().nextDouble() < Math.exp(-(currentFitness - lastFitness) / TEMPERATURE);
+    private Boolean checkForCoolingStep(Double currentFitness, Double lastFitness) {
+        return new Random().nextDouble() < Math.exp((currentFitness - lastFitness) / TEMPERATURE);
     }
 }

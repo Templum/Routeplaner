@@ -5,4 +5,5 @@
     <dimen name="small_horizontal_margin">8dp</dimen>
     <dimen name="small_vertical_margin">8dp</dimen>
     <dimen name="icon_size">32dp</dimen>
+    <dimen name="spinner_size">250dp</dimen>
 </resources>

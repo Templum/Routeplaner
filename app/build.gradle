@@ -25,6 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.android.support:recyclerview-v7:25.1.1'
     compile 'com.android.support:cardview-v7:25.1.1'
+    compile 'com.github.ybq:Android-SpinKit:1.1.0'
 
     // View Injection
     compile 'com.jakewharton:butterknife:7.0.1'

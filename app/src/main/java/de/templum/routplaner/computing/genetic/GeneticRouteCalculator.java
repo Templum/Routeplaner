@@ -11,7 +11,7 @@ import de.templum.routplaner.model.RoutePoint;
 
 public class GeneticRouteCalculator implements RouteCalculator {
 
-    public GeneticRouteCalculator(){
+    public GeneticRouteCalculator() {
 
     }
 

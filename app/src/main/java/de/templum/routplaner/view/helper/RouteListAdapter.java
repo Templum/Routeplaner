@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,23 +22,23 @@ import de.templum.routplaner.R;
 
 public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.RouteItem> {
 
-    private ArrayList<String> mData;
-    private Context mCtx;
     private final int START_OR_END = 0;
     private final int STATION = 1;
+    private ArrayList<String> mData;
+    private Context mCtx;
 
 
-    public RouteListAdapter(Context context){
+    public RouteListAdapter(Context context) {
         mData = new ArrayList<>();
         mCtx = context;
     }
 
     @Override
-    public RouteItem onCreateViewHolder(ViewGroup parent, int viewType) {
-        RouteItem container = new RouteItem(LayoutInflater.from(parent.getContext()).inflate(R.layout.route_item,parent,false));
-        if(viewType == START_OR_END){
+    public RouteListAdapter.RouteItem onCreateViewHolder(ViewGroup parent, int viewType) {
+        RouteItem container = new RouteItem(LayoutInflater.from(parent.getContext()).inflate(R.layout.route_item, parent, false));
+        if (viewType == START_OR_END) {
             container.setDrawable(START_OR_END);
-        }else{
+        } else {
             container.setDrawable(STATION);
         }
 
@@ -62,17 +61,17 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.Rout
     }
 
     @UiThread
-    public void addItem(String item){
+    public void addItem(String item) {
         int insert = mData.size();
         mData.add(item);
         notifyItemInserted(insert);
     }
 
-    public ArrayList<String> getData(){
+    public ArrayList<String> getData() {
         return mData;
     }
 
-    public class RouteItem extends RecyclerView.ViewHolder{
+    public class RouteItem extends RecyclerView.ViewHolder {
 
         @Bind(R.id.route_item_address)
         TextView mText;
@@ -81,18 +80,18 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.Rout
 
         public RouteItem(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
 
-        public void setText(final String text){
+        public void setText(final String text) {
             mText.setText(text);
         }
 
-        public void setDrawable(final int type){
-            if(type == START_OR_END)
-                mIcon.setImageDrawable(ContextCompat.getDrawable(mCtx,R.drawable.icon_start));
+        public void setDrawable(final int type) {
+            if (type == START_OR_END)
+                mIcon.setImageDrawable(ContextCompat.getDrawable(mCtx, R.drawable.icon_start));
             else
-                mIcon.setImageDrawable(ContextCompat.getDrawable(mCtx,R.drawable.icon_station));
+                mIcon.setImageDrawable(ContextCompat.getDrawable(mCtx, R.drawable.icon_station));
         }
     }
 }

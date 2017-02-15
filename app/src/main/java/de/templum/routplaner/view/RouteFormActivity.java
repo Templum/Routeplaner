@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.RelativeLayout;
+
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
@@ -22,6 +23,8 @@ import de.templum.routplaner.view.helper.RouteListAdapter;
 
 
 public class RouteFormActivity extends AppCompatActivity {
+
+    private static final Integer LOCATION_PICKER_INTENT = 1337;
 
     @Bind(R.id.form_route_list)
     RecyclerView mList;
@@ -41,12 +44,12 @@ public class RouteFormActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 10) {
+        if (requestCode == LOCATION_PICKER_INTENT) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(this,data);
+                Place place = PlacePicker.getPlace(this, data);
                 mAdapter.addItem(place.getAddress().toString());
-            }else{
-                Snackbar.make(mBottom,R.string.error_something_went_wrong, BaseTransientBottomBar.LENGTH_LONG).show();
+            } else {
+                Snackbar.make(mBottom, R.string.error_something_went_wrong, BaseTransientBottomBar.LENGTH_LONG).show();
             }
         }
     }
@@ -55,14 +58,14 @@ public class RouteFormActivity extends AppCompatActivity {
     public void addLocation() {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
-            startActivityForResult(builder.build(this), 10);
+            startActivityForResult(builder.build(this), LOCATION_PICKER_INTENT);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-            Snackbar.make(mBottom,R.string.error_google_places_not_reachable, BaseTransientBottomBar.LENGTH_LONG).show();
+            Snackbar.make(mBottom, R.string.error_google_places_not_reachable, BaseTransientBottomBar.LENGTH_LONG).show();
         }
     }
 
     @OnClick(R.id.form_submit)
-    public void calculateRoute(){
+    public void calculateRoute() {
         Intent intent = new Intent(this, RouteViewActivity.class);
         intent.putStringArrayListExtra(RouteViewActivity.ROUTE_LIST, mAdapter.getData());
         startActivity(intent);

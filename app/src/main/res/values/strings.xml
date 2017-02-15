@@ -2,6 +2,9 @@
     <string name="app_name">Routeplaner</string>
     <string name="form_header_text">Create an Route</string>
     <string name="form_submit_btn">Calculate best route</string>
+    <string name="route_view_header">Optimized Route</string>
+    <string name="route_view_label">Difference to original route: </string>
+    <string name="route_view_value">Calculating...</string>
     <string name="error_something_went_wrong">An exception happened during the execution. Please try again!</string>
     <string name="error_google_places_not_reachable">This application needs the google places service to work. And its currently not available!</string>
 </resources>

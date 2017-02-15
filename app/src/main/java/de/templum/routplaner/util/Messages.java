@@ -10,16 +10,16 @@ public class Messages {
     public static final String NO_RESULT_FOUND = "NO RESULT FOUND";
 
 
-    public class MessageFactory{
+    public class MessageFactory {
         private Context mContex;
 
-        public MessageFactory(final Context ctx){
+        public MessageFactory(final Context ctx) {
             mContex = ctx;
         }
 
 
-        public String buildMessage(final String message){
-            switch (message){
+        public String buildMessage(final String message) {
+            switch (message) {
                 case NO_RESULT_FOUND:
                     return "TODO";
                 default:
