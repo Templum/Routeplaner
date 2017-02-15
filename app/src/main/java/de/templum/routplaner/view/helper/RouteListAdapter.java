@@ -59,15 +59,30 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.Rout
 
     @Override
     public int getItemViewType(int position) {
-        return (position == 0) ? START_OR_END : STATION;
+        return (position == 0 || position == mData.size() - 1) ? START_OR_END : STATION;
     }
 
     @UiThread
     public void addItem(String item) {
         int insert = mData.size();
-        mData.add(item);
-        notifyItemInserted(insert);
+        if(insert < 1){
+            mData.add(item);
+            mData.add(item);
+            notifyItemRangeInserted(0,2);
+        }else{
+            appendItem(item);
+        }
+
     }
+
+    private void appendItem(String item){
+        mData.remove(mData.size() - 1);
+        mData.add(item);
+        mData.add(mData.get(0));
+
+        notifyDataSetChanged();
+    }
+
 
     public ArrayList<String> getData() {
         return mData;

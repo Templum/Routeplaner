@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class HillClimberRouteCalculator implements RouteCalculator {
 
-    private final Integer TIMES = 10000;
+    private final Integer TIMES = 100000;
     private final String TAG = HillClimberRouteCalculator.class.getCanonicalName();
 
     //TODO: Start multiple attempts

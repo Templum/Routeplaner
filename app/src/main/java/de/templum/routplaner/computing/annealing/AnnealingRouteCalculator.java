@@ -21,9 +21,9 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class AnnealingRouteCalculator implements RouteCalculator {
 
-    private final Double EPSILON = 0.001;
+    private final Double EPSILON = 0.01;
     private final String TAG = AnnealingRouteCalculator.class.getCanonicalName();
-    private Double TEMPERATURE = 1538.0; //TODO: Search a better Temperature
+    private Double TEMPERATURE = 1538.0;
 
     //TODO: Start multiple attempts
     public AnnealingRouteCalculator() {

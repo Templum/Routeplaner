@@ -23,7 +23,7 @@ public class GeneticRouteCalculator implements RouteCalculator {
     private final String TAG = GeneticRouteCalculator.class.getCanonicalName();
 
     public GeneticRouteCalculator() {
-        mUniverse = new Universe(1000); //TODO: Maybe Adjust
+        mUniverse = new Universe(500);
     }
 
     @Override

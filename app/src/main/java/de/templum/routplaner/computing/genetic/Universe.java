@@ -23,7 +23,7 @@ public class Universe {
     private List<Individual> mMatingpool;
     private Integer mEliteOffset;
     private Integer mPopsize;
-    private Integer mEpochs = 10000;
+    private Integer mEpochs = 1000;
 
     public Universe(Integer popsize) {
         mPopulation = new ArrayList<>();
