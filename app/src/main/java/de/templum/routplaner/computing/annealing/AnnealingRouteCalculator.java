@@ -1,7 +1,5 @@
 package de.templum.routplaner.computing.annealing;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,9 +9,9 @@ import de.templum.routplaner.model.RoutePoint;
 import de.templum.routplaner.util.Helper;
 
 /**
+ * This class uses the simulated annealing algorithm to optimize the given route.
  * Created by simon on 08.02.2017.
  */
-
 public class AnnealingRouteCalculator implements RouteCalculator {
 
     private final Double EPSILON = 0.001;

@@ -15,6 +15,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 
 /**
+ * Class provides functionality to improve an given route.
  * Created by simon on 08.02.2017.
  */
 
@@ -34,7 +35,13 @@ public class RouteFactory {
         //mAlgorithms.add(new GeneticRouteCalculator());
     }
 
-    public Observable<List<RoutePoint>> calculateRoute(final List<String> route) {
+    /**
+     * This method tries to optimize the given route in terms of length.
+     * Therefore it uses the registered algorithms.
+     * @param route which should be optimized
+     * @return Optimized Route
+     */
+    public Observable<List<RoutePoint>> optimizeGivenRoute(final List<String> route) {
         return Observable.defer(new Callable<ObservableSource<? extends List<RoutePoint>>>() {
             @Override
             public ObservableSource<? extends List<RoutePoint>> call() throws Exception {

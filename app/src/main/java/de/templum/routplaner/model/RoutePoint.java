@@ -3,6 +3,8 @@ package de.templum.routplaner.model;
 import android.location.Location;
 
 /**
+ * This class represents an list route.
+ * It contains the location and the address.
  * Created by simon on 08.02.2017.
  */
 public class RoutePoint {
@@ -15,7 +17,7 @@ public class RoutePoint {
     }
 
     public RoutePoint(RoutePoint routePoint) {
-        mLocation = routePoint.getLocation();
+        mLocation = new Location(routePoint.getLocation());
         mAddress = routePoint.toString();
     }
 
@@ -26,5 +28,14 @@ public class RoutePoint {
     @Override
     public String toString() {
         return mAddress;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof RoutePoint){
+            return mAddress.equals(((RoutePoint) obj).mAddress);
+        }else{
+            return super.equals(obj);
+        }
     }
 }

@@ -56,7 +56,7 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
 
         if (getIntent() != null && getIntent().getExtras() != null) {
             List<String> routeList = getIntent().getExtras().getStringArrayList(ROUTE_LIST);
-            mFactory.calculateRoute(routeList)
+            mFactory.optimizeGivenRoute(routeList)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this);

@@ -10,17 +10,16 @@ import de.templum.routplaner.model.RoutePoint;
 import de.templum.routplaner.util.Helper;
 
 /**
+ * This class uses the hill climber algorithm to optimize the given route.
  * Created by simon on 08.02.2017.
  */
-
 public class HillClimberRouteCalculator implements RouteCalculator {
 
     private final Integer TIMES = 1000000;
     private final String TAG = HillClimberRouteCalculator.class.getCanonicalName();
 
     //TODO: Start multiple attempts
-    public HillClimberRouteCalculator() {
-    }
+    public HillClimberRouteCalculator() {}
 
     @Override
     public List<RoutePoint> calculate(List<RoutePoint> initialRoute) {
