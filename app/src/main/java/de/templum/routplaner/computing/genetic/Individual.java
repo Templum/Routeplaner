@@ -7,6 +7,7 @@ import de.templum.routplaner.model.RoutePoint;
 import de.templum.routplaner.util.Helper;
 
 /**
+ * This class represents an Individual made of an dna and a fitness.
  * Created by simon on 15.02.2017.
  * Copyright (c) 2017 simon All rights reserved.
  */
@@ -26,9 +27,11 @@ public class Individual {
     public void calculateFitness() {
         mFitness = Helper.calculateInverseDistance(mDna);
     }
+
     public void mutate() {
 
     }
+
     public Individual orderedCrossOver(Individual otherParent) {
         List<RoutePoint> childDna = new ArrayList<>(); // Important first and last position are immutable
         int start, end;
@@ -54,10 +57,11 @@ public class Individual {
         return new Individual(childDna);
     }
 
-    public List<RoutePoint> getDna(){
+    public List<RoutePoint> getDna() {
         return mDna;
     }
-    public Double getFitness(){
+
+    public Double getFitness() {
         return mFitness;
     }
 

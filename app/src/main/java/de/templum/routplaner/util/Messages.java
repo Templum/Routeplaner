@@ -4,6 +4,7 @@ import android.content.Context;
 
 /**
  * Created by simon on 10.02.2017.
+ * Copyright (c) 2017 simon All rights reserved.
  */
 
 public class Messages {

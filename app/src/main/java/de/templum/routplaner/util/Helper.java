@@ -15,19 +15,21 @@ import de.templum.routplaner.model.RoutePoint;
 /**
  * This class shares helper methods.
  * Created by simon on 08.02.2017.
+ * Copyright (c) 2017 simon All rights reserved.
  */
 
 public class Helper {
 
     /**
      * Calculates the length in meters for the given route.
+     *
      * @param route for which the length should be calculated
      * @return length in meters
      */
     public static Double calculateRouteLength(List<RoutePoint> route) {
         Double length = 0.0;
 
-        for (int i = 0; i < route.size() - 2; i++){
+        for (int i = 0; i < route.size() - 2; i++) {
             length += route.get(i).getLocation().distanceTo(route.get(i + 1).getLocation());
         }
 
@@ -37,6 +39,7 @@ public class Helper {
     /**
      * This method swaps two random points within the given route, but maintains the first and last entry of the list.
      * Because the first and last entry are immutable, the route needs to be at least 4.
+     *
      * @param route Route to modifiy
      */
     public static void swapRandomPoints(List<RoutePoint> route) {
@@ -55,6 +58,7 @@ public class Helper {
 
     /**
      * This method calculates the inverse distance for the provided route.
+     *
      * @param route For which the inverse should be calculated
      * @return inverse length
      */
@@ -64,7 +68,8 @@ public class Helper {
 
     /**
      * Uses the Geocoder to get an location for the provided address.
-     * @param ctx Context which is needed to initialize a Geocoder
+     *
+     * @param ctx             Context which is needed to initialize a Geocoder
      * @param addressAsString for which an location should be found
      * @return found address or null
      */
@@ -91,11 +96,12 @@ public class Helper {
 
     /**
      * Returns an random number which is between lower and upper bound. Includes also the bounds.
-     * @param lowerBound  min value
+     *
+     * @param lowerBound min value
      * @param upperBound max value
      * @return Random number which is lowerBound >= && <= upperBound
      */
-    public static Integer getRandomNumberBetween(Integer lowerBound, Integer upperBound){
+    public static Integer getRandomNumberBetween(Integer lowerBound, Integer upperBound) {
         Random generator = new Random();
         return generator.nextInt(upperBound - lowerBound + 1) + lowerBound;
     }
@@ -103,12 +109,13 @@ public class Helper {
     /**
      * Returns an randomly shuffled version of the given route.
      * But it still preserves the first and last entry
-     * @param route to suhuffle
+     *
+     * @param route to shuffle
      * @return shuffled route
      */
-    public static List<RoutePoint> randomShuffle(final List<RoutePoint> route){
+    public static List<RoutePoint> randomShuffle(final List<RoutePoint> route) {
         List<RoutePoint> out = route.subList(1, route.size() - 2);
-        Collections.shuffle(out,new Random());
+        Collections.shuffle(out, new Random());
         out.add(route.get(0));
         out.add(route.get(route.size() - 1));
         return out;

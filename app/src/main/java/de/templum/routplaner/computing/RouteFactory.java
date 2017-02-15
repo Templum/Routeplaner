@@ -9,6 +9,7 @@ import java.util.concurrent.Callable;
 
 import de.templum.routplaner.computing.annealing.AnnealingRouteCalculator;
 import de.templum.routplaner.computing.climber.HillClimberRouteCalculator;
+import de.templum.routplaner.computing.genetic.GeneticRouteCalculator;
 import de.templum.routplaner.model.RoutePoint;
 import de.templum.routplaner.util.Helper;
 import io.reactivex.Observable;
@@ -17,6 +18,7 @@ import io.reactivex.ObservableSource;
 /**
  * Class provides functionality to improve an given route.
  * Created by simon on 08.02.2017.
+ * Copyright (c) 2017 simon All rights reserved.
  */
 
 public class RouteFactory {
@@ -32,12 +34,13 @@ public class RouteFactory {
         // Adding our available Algorithms
         mAlgorithms.add(new AnnealingRouteCalculator());
         mAlgorithms.add(new HillClimberRouteCalculator());
-        //mAlgorithms.add(new GeneticRouteCalculator());
+        mAlgorithms.add(new GeneticRouteCalculator());
     }
 
     /**
      * This method tries to optimize the given route in terms of length.
      * Therefore it uses the registered algorithms.
+     *
      * @param route which should be optimized
      * @return Optimized Route
      */

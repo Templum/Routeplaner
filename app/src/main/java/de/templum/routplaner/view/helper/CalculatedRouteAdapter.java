@@ -1,6 +1,5 @@
 package de.templum.routplaner.view.helper;
 
-import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,7 +16,9 @@ import de.templum.routplaner.R;
 import de.templum.routplaner.model.RoutePoint;
 
 /**
+ * An adapter which displays the optimized route.
  * Created by simon on 14.02.2017.
+ * Copyright (c) 2017 simon All rights reserved.
  */
 
 public class CalculatedRouteAdapter extends RecyclerView.Adapter<CalculatedRouteAdapter.RouteItem> {
@@ -52,7 +53,7 @@ public class CalculatedRouteAdapter extends RecyclerView.Adapter<CalculatedRoute
         notifyItemRangeRemoved(0, size);
     }
 
-    public List<RoutePoint> getData(){
+    public List<RoutePoint> getData() {
         return mData;
     }
 

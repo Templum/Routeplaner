@@ -6,6 +6,7 @@ import android.location.Location;
  * This class represents an list route.
  * It contains the location and the address.
  * Created by simon on 08.02.2017.
+ * Copyright (c) 2017 simon All rights reserved.
  */
 public class RoutePoint {
     private Location mLocation;
@@ -32,9 +33,9 @@ public class RoutePoint {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof RoutePoint){
+        if (obj instanceof RoutePoint) {
             return mAddress.equals(((RoutePoint) obj).mAddress);
-        }else{
+        } else {
             return super.equals(obj);
         }
     }

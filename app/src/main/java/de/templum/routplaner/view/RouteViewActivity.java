@@ -111,7 +111,7 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
         }).start();
     }
 
-    private void calculateDifference(){
+    private void calculateDifference() {
         Double lengthOriginal = Helper.calculateRouteLength(mInitialRoute);
         Double lengthCurrent = Helper.calculateRouteLength(mAdapter.getData());
 
@@ -121,10 +121,10 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
         Log.d("Difference", "Original: " + lengthOriginal + " Current: " + lengthCurrent);
         Log.d("Difference", "Signum: " + signum + " Difference: " + dif);
 
-        if(signum > 0){
+        if (signum > 0) {
             mValue.setTextColor(Color.GREEN);
             mValue.setText(String.format(Locale.getDefault(), "%1$,.2f KM", dif));
-        }else{
+        } else {
             mValue.setTextColor(Color.RED);
             mValue.setText(String.format(Locale.getDefault(), "%1$,.2f KM", dif));
         }

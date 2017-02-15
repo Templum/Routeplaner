@@ -11,12 +11,13 @@ import de.templum.routplaner.util.Helper;
 /**
  * This class uses the simulated annealing algorithm to optimize the given route.
  * Created by simon on 08.02.2017.
+ * Copyright (c) 2017 simon All rights reserved.
  */
 public class AnnealingRouteCalculator implements RouteCalculator {
 
     private final Double EPSILON = 0.001;
-    private Double TEMPERATURE = 1538.0; //TODO: Search a better Temperature
     private final String TAG = AnnealingRouteCalculator.class.getCanonicalName();
+    private Double TEMPERATURE = 1538.0; //TODO: Search a better Temperature
 
     //TODO: Start multiple attempts
     public AnnealingRouteCalculator() {

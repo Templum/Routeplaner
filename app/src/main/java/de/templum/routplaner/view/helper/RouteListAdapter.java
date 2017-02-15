@@ -17,7 +17,9 @@ import butterknife.ButterKnife;
 import de.templum.routplaner.R;
 
 /**
+ * An Adapter for displaying the route during creation.
  * Created by simon on 11.02.2017.
+ * Copyright (c) 2017 simon All rights reserved.
  */
 
 public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.RouteItem> {
