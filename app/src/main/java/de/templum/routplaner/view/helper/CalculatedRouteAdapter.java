@@ -53,10 +53,6 @@ public class CalculatedRouteAdapter extends RecyclerView.Adapter<CalculatedRoute
         notifyItemRangeRemoved(0, size);
     }
 
-    public List<RoutePoint> getData() {
-        return mData;
-    }
-
     @UiThread
     public void addAll(List<RoutePoint> data) {
         int size = mData.size();

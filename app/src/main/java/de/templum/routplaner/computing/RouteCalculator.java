@@ -3,6 +3,7 @@ package de.templum.routplaner.computing;
 import java.util.List;
 
 import de.templum.routplaner.model.RoutePoint;
+import io.reactivex.Observable;
 
 /**
  * Interface which needs to implemented by each computing algorithm.
@@ -10,5 +11,5 @@ import de.templum.routplaner.model.RoutePoint;
  * Copyright (c) 2017 simon All rights reserved.
  */
 public interface RouteCalculator {
-    List<RoutePoint> calculate(List<RoutePoint> initialRoute);
+    Observable<List<RoutePoint>> calculate(List<RoutePoint> initialRoute);
 }

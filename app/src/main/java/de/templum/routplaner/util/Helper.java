@@ -6,8 +6,10 @@ import android.location.Geocoder;
 import android.location.Location;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import de.templum.routplaner.model.RoutePoint;
@@ -66,32 +68,38 @@ public class Helper {
         return -1 * Helper.calculateRouteLength(route);
     }
 
+
     /**
-     * Uses the Geocoder to get an location for the provided address.
+     * Uses the Geocoder to get the locations for the provided addresses.
+     * And wrap them into the routepoint model.
      *
-     * @param ctx             Context which is needed to initialize a Geocoder
-     * @param addressAsString for which an location should be found
-     * @return found address or null
+     * @param ctx       Context which is needed to initialize a Geocoder
+     * @param addresses for which an location should be found
+     * @return found addresses or empty list
      */
-    public static Location searchBy(Context ctx, String addressAsString) {
-        Geocoder geocoder = new Geocoder(ctx);
+    public static List<RoutePoint> searchBy(Context ctx, List<String> addresses) {
+        Geocoder geocoder = new Geocoder(ctx, Locale.getDefault());
+        List<RoutePoint> out = new ArrayList<>();
 
-        try {
-            List<Address> findings = geocoder.getFromLocationName(addressAsString, 10);
+        for (String addressAsString : addresses) {
+            try {
+                List<Address> findings = geocoder.getFromLocationName(addressAsString, 10);
 
-            if (findings.size() >= 1) {
-                Address address = findings.get(0);
-                Location location = new Location(addressAsString);
-                location.setLatitude(address.getLatitude());
-                location.setLongitude(address.getLongitude());
-                return location;
-            } else {
-                return null;
+                if (findings.size() >= 1) {
+                    Address address = findings.get(0);
+                    Location location = new Location(addressAsString);
+                    location.setLatitude(address.getLatitude());
+                    location.setLongitude(address.getLongitude());
+                    out.add(new RoutePoint(location, addressAsString));
+                } else {
+                    return Collections.emptyList();
+                }
+
+            } catch (IOException e) {
+                return Collections.emptyList();
             }
-
-        } catch (IOException e) {
-            return null;
         }
+        return out;
     }
 
     /**
@@ -114,10 +122,7 @@ public class Helper {
      * @return shuffled route
      */
     public static List<RoutePoint> randomShuffle(final List<RoutePoint> route) {
-        List<RoutePoint> out = route.subList(1, route.size() - 2);
-        Collections.shuffle(out, new Random());
-        out.add(route.get(0));
-        out.add(route.get(route.size() - 1));
-        return out;
+        Collections.shuffle(route.subList(1, route.size() - 2), new Random());
+        return route;
     }
 }

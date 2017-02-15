@@ -32,9 +32,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class RouteViewActivity extends AppCompatActivity implements Observer<List<RoutePoint>> {
-
     public static final String ROUTE_LIST = "Route_List";
-    private final List<RoutePoint> mInitialRoute = new ArrayList<>();
+    private final String TAG = RouteViewActivity.class.getCanonicalName();
+
     @Bind(R.id.route_view_list)
     RecyclerView mList;
     @Bind(R.id.route_view_footer)
@@ -44,6 +44,8 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
     @Bind(R.id.route_view_progress)
     SpinKitView mProgress;
 
+    private List<RoutePoint> mInitialRoute = new ArrayList<>();
+    private List<RoutePoint> mOptimizedRoute = new ArrayList<>();
     private RouteFactory mFactory = new RouteFactory(this);
     private Disposable mSubscription;
     private CalculatedRouteAdapter mAdapter;
@@ -56,11 +58,11 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
 
         if (getIntent() != null && getIntent().getExtras() != null) {
             List<String> routeList = getIntent().getExtras().getStringArrayList(ROUTE_LIST);
+            init(routeList);
             mFactory.optimizeGivenRoute(routeList)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this);
-            init(routeList);
         }
 
         initialiseCalculatedRouteList();
@@ -74,8 +76,18 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
 
     @Override
     public void onNext(List<RoutePoint> value) {
-        mAdapter.clearData();
-        mAdapter.addAll(value);
+        if(value.isEmpty()) return;
+        Log.i(TAG, "Found an route");
+
+        if(mOptimizedRoute.isEmpty()) {
+            mOptimizedRoute.addAll(value);
+            Log.i(TAG, "Found an better route");
+        }
+        if(Helper.calculateRouteLength(value) < Helper.calculateRouteLength(mOptimizedRoute)){
+            mOptimizedRoute.clear();
+            mOptimizedRoute.addAll(value);
+            Log.i(TAG, "Found an better route");
+        }
     }
 
     @Override
@@ -86,6 +98,7 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
     @Override
     public void onComplete() {
         if (mSubscription != null) mSubscription.dispose();
+        mAdapter.addAll(mOptimizedRoute);
         mProgress.setVisibility(View.GONE);
         mList.setVisibility(View.VISIBLE);
         calculateDifference();
@@ -102,26 +115,21 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (String address : initialAddresses) {
-                    Location location = Helper.searchBy(RouteViewActivity.this, address);
-                    if (location != null)
-                        mInitialRoute.add(new RoutePoint(location, location.getProvider()));
-                }
+                mInitialRoute = Helper.searchBy(RouteViewActivity.this, initialAddresses);
             }
         }).start();
     }
 
     private void calculateDifference() {
         Double lengthOriginal = Helper.calculateRouteLength(mInitialRoute);
-        Double lengthCurrent = Helper.calculateRouteLength(mAdapter.getData());
+        Double lengthCurrent = Helper.calculateRouteLength(mOptimizedRoute);
 
-        Double signum = Math.signum(lengthOriginal - lengthCurrent);
+        Boolean isBetter = lengthCurrent < lengthOriginal;
         Double dif = Math.abs(lengthOriginal - lengthCurrent) / 1000; //Convert to Kilometer
 
-        Log.d("Difference", "Original: " + lengthOriginal + " Current: " + lengthCurrent);
-        Log.d("Difference", "Signum: " + signum + " Difference: " + dif);
+        Log.i(TAG, "Original: " + lengthOriginal + " Current: " + lengthCurrent);
 
-        if (signum > 0) {
+        if (isBetter) {
             mValue.setTextColor(Color.GREEN);
             mValue.setText(String.format(Locale.getDefault(), "%1$,.2f KM", dif));
         } else {

@@ -23,7 +23,7 @@ public class Universe {
     private List<Individual> mMatingpool;
     private Integer mEliteOffset;
     private Integer mPopsize;
-    private Integer mEpochs = 1000000;
+    private Integer mEpochs = 10000;
 
     public Universe(Integer popsize) {
         mPopulation = new ArrayList<>();
@@ -89,7 +89,7 @@ public class Universe {
      **/
     private void createInitialPopulation(List<RoutePoint> initialRoute) {
         for (int i = 0; i < mPopsize; i++) {
-            mPopulation.add(new Individual(Helper.randomShuffle(initialRoute)));
+            mPopulation.add(new Individual(Helper.randomShuffle(new ArrayList<>(initialRoute))));
         }
     }
 

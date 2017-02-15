@@ -2,6 +2,7 @@ package de.templum.routplaner.computing;
 
 import android.content.Context;
 import android.location.Location;
+import android.os.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class RouteFactory {
         mAlgorithms = new ArrayList<>();
 
         // Adding our available Algorithms
-        mAlgorithms.add(new AnnealingRouteCalculator());
+        //mAlgorithms.add(new AnnealingRouteCalculator());
         mAlgorithms.add(new HillClimberRouteCalculator());
         mAlgorithms.add(new GeneticRouteCalculator());
     }
@@ -48,25 +49,20 @@ public class RouteFactory {
         return Observable.defer(new Callable<ObservableSource<? extends List<RoutePoint>>>() {
             @Override
             public ObservableSource<? extends List<RoutePoint>> call() throws Exception {
-                List<RoutePoint> initialRoute = new ArrayList<>();
+                List<RoutePoint> bestRoute = transform(route);
+                List<Observable<List<RoutePoint>>> sources = new ArrayList<>();
 
-                for (String address : route) {
-                    Location location = Helper.searchBy(mCtx, address);
-                    if (location != null)
-                        initialRoute.add(new RoutePoint(location, location.getProvider()));
+                sources.add(Observable.just(bestRoute));
+                for (RouteCalculator algorithm: mAlgorithms){
+                    sources.add(algorithm.calculate(new ArrayList<>(bestRoute)));
                 }
-                initialRoute.add(new RoutePoint(initialRoute.get(0)));
-                List<RoutePoint> bestRoute = initialRoute;
 
-                for (RouteCalculator algorithm : mAlgorithms) {
-                    List<RoutePoint> calculatedRoute = algorithm.calculate(new ArrayList<>(bestRoute));
-
-                    if (calculatedRoute != null && Helper.calculateRouteLength(bestRoute) > Helper.calculateRouteLength(calculatedRoute)) {
-                        bestRoute = calculatedRoute;
-                    }
-                }
-                return Observable.just(bestRoute);
+                return Observable.concat(sources);
             }
         });
+    }
+
+    private List<RoutePoint> transform(List<String> list){
+        return Helper.searchBy(mCtx, list);
     }
 }

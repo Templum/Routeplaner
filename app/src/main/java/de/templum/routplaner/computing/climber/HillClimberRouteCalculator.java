@@ -4,10 +4,14 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import de.templum.routplaner.computing.RouteCalculator;
 import de.templum.routplaner.model.RoutePoint;
 import de.templum.routplaner.util.Helper;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * This class uses the hill climber algorithm to optimize the given route.
@@ -16,7 +20,7 @@ import de.templum.routplaner.util.Helper;
  */
 public class HillClimberRouteCalculator implements RouteCalculator {
 
-    private final Integer TIMES = 1000000;
+    private final Integer TIMES = 10000;
     private final String TAG = HillClimberRouteCalculator.class.getCanonicalName();
 
     //TODO: Start multiple attempts
@@ -24,26 +28,32 @@ public class HillClimberRouteCalculator implements RouteCalculator {
     }
 
     @Override
-    public List<RoutePoint> calculate(List<RoutePoint> initialRoute) {
-        Double bestFitness = Helper.calculateInverseDistance(initialRoute);
-        List<RoutePoint> savedState;
+    public Observable<List<RoutePoint>> calculate(final List<RoutePoint> initialRoute) {
+        return Observable.defer(new Callable<ObservableSource<? extends List<RoutePoint>>>() {
+            @Override
+            public ObservableSource<? extends List<RoutePoint>> call() throws Exception {
+                List<RoutePoint> best = initialRoute;
+                Double bestFitness = Helper.calculateInverseDistance(best);
+                List<RoutePoint> savedState;
 
-        for (int i = 0; i < TIMES; i++) {
-            savedState = new ArrayList<>(initialRoute);
-            Helper.swapRandomPoints(initialRoute);
+                for (int i = 0; i < TIMES; i++) {
+                    savedState = new ArrayList<>(best);
+                    Helper.swapRandomPoints(best);
 
-            Double currentFitness = Helper.calculateInverseDistance(initialRoute);
+                    Double currentFitness = Helper.calculateInverseDistance(best);
 
-            if (currentFitness > bestFitness) {
-                // No need for restoring state, update the bestFitness
-                Log.d(TAG, "Found a better route");
-                bestFitness = currentFitness;
-            } else {
-                // Restore the old route
-                Log.d(TAG, "Found a worse route");
-                initialRoute = savedState;
+                    if (currentFitness > bestFitness) {
+                        // No need for restoring state, update the bestFitness
+                        bestFitness = currentFitness;
+                    } else {
+                        // Restore the old route
+                        best = savedState;
+                    }
+                }
+                Log.i(TAG, "Finished Executing");
+
+                return Observable.just(best);
             }
-        }
-        return initialRoute;
+        }).subscribeOn(Schedulers.newThread());
     }
 }
