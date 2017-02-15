@@ -23,7 +23,7 @@ public class Universe {
     private List<Individual> mMatingpool;
     private Integer mEliteOffset;
     private Integer mPopsize;
-    private Integer mEpochs = 1000;
+    private final Integer mEpochs = 500;
 
     public Universe(Integer popsize) {
         mPopulation = new ArrayList<>();
@@ -46,8 +46,6 @@ public class Universe {
         evaluation();
         reproduction();
         mutation();
-
-        Log.i(TAG, "Best Route has a distance of " + mPopulation.get(0).getFitness());
     }
 
     /**
@@ -76,6 +74,9 @@ public class Universe {
         for (int i = mPopsize / 2; i < mPopsize; i++) {
             mMatingpool.add(rouletteSelection(totalFitness).reproduce());
         }
+        mPopulation.clear();
+        mPopulation.addAll(mMatingpool);
+        mMatingpool.clear();
     }
 
     private void mutation() {
