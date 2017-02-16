@@ -65,17 +65,17 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.Rout
     @UiThread
     public void addItem(String item) {
         int insert = mData.size();
-        if(insert < 1){
+        if (insert < 1) {
             mData.add(item);
             mData.add(item);
-            notifyItemRangeInserted(0,2);
-        }else{
+            notifyItemRangeInserted(0, 2);
+        } else {
             appendItem(item);
         }
 
     }
 
-    private void appendItem(String item){
+    private void appendItem(String item) {
         mData.remove(mData.size() - 1);
         mData.add(item);
         mData.add(mData.get(0));
@@ -88,14 +88,14 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.Rout
         return mData;
     }
 
-    public class RouteItem extends RecyclerView.ViewHolder {
+    class RouteItem extends RecyclerView.ViewHolder {
 
         @Bind(R.id.route_item_address)
         TextView mText;
         @Bind(R.id.route_item_icon)
         ImageView mIcon;
 
-        public RouteItem(View itemView) {
+        RouteItem(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

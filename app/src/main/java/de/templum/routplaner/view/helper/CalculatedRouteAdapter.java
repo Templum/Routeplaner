@@ -38,19 +38,12 @@ public class CalculatedRouteAdapter extends RecyclerView.Adapter<CalculatedRoute
         RoutePoint routePoint = mData.get(position);
 
         holder.setText(routePoint.toString());
-        holder.setPosition(position);
+        holder.setPosition(position + 1); // Only it guys can handle a list which start at 0
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
-    }
-
-    @UiThread
-    public void clearData() {
-        int size = mData.size();
-        mData.clear();
-        notifyItemRangeRemoved(0, size);
     }
 
     @UiThread
@@ -68,7 +61,7 @@ public class CalculatedRouteAdapter extends RecyclerView.Adapter<CalculatedRoute
         @Bind(R.id.icon_position)
         TextView mPosition;
 
-        public RouteItem(View itemView) {
+        RouteItem(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -77,12 +70,12 @@ public class CalculatedRouteAdapter extends RecyclerView.Adapter<CalculatedRoute
             mText.setText(text);
         }
 
-        private void setPosition(final String position) {
-            mPosition.setText(position);
-        }
-
         public void setPosition(final Integer position) {
             setPosition(position.toString());
+        }
+
+        private void setPosition(final String position) {
+            mPosition.setText(position);
         }
     }
 }

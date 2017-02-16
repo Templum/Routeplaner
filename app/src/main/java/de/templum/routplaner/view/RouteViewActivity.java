@@ -1,7 +1,6 @@
 package de.templum.routplaner.view;
 
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
@@ -44,28 +43,58 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
     @Bind(R.id.route_view_progress)
     SpinKitView mProgress;
 
+    private List<String> mData = null;
     private List<RoutePoint> mInitialRoute = new ArrayList<>();
     private List<RoutePoint> mOptimizedRoute = new ArrayList<>();
     private RouteFactory mFactory = new RouteFactory(this);
     private Disposable mSubscription;
     private CalculatedRouteAdapter mAdapter;
 
+    /**
+     * Lifecycle
+     **/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_view);
         ButterKnife.bind(this);
 
-        if (getIntent() != null && getIntent().getExtras() != null) {
-            List<String> routeList = getIntent().getExtras().getStringArrayList(ROUTE_LIST);
-            init(routeList);
-            mFactory.optimizeGivenRoute(routeList)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this);
+
+        if (getIntent() != null) {
+            mData = getIntent().getExtras().getStringArrayList(ROUTE_LIST);
+        }
+
+        if (savedInstanceState != null) {
+            mData = savedInstanceState.getStringArrayList(ROUTE_LIST);
         }
 
         initialiseCalculatedRouteList();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mSubscription != null) mSubscription.dispose();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mData != null && mOptimizedRoute.isEmpty()) {
+            initializeOptimization();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        if (mData != null) {
+            outState.putStringArrayList(ROUTE_LIST, (ArrayList<String>) mData);
+        }
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -76,14 +105,14 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
 
     @Override
     public void onNext(List<RoutePoint> value) {
-        if(value.isEmpty()) return;
+        if (value.isEmpty()) return;
         Log.i(TAG, "Found an route");
 
-        if(mOptimizedRoute.isEmpty()) {
+        if (mOptimizedRoute.isEmpty()) {
             mOptimizedRoute.addAll(value);
             Log.i(TAG, "Found an better route");
         }
-        if(Helper.calculateRouteLength(value) < Helper.calculateRouteLength(mOptimizedRoute)){
+        if (Helper.calculateRouteLength(value) < Helper.calculateRouteLength(mOptimizedRoute)) {
             mOptimizedRoute.clear();
             mOptimizedRoute.addAll(value);
             Log.i(TAG, "Found an better route");
@@ -111,13 +140,20 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
         mList.setHasFixedSize(true);
     }
 
-    private void init(final List<String> initialAddresses) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mInitialRoute = Helper.searchBy(RouteViewActivity.this, initialAddresses);
-            }
-        }).start();
+    private void initializeOptimization() {
+        if (mInitialRoute == null || mInitialRoute.isEmpty()) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    mInitialRoute = Helper.searchBy(RouteViewActivity.this, mData);
+                }
+            }).start();
+        }
+
+        mFactory.optimizeGivenRoute(mData)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this);
     }
 
     private void calculateDifference() {

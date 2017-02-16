@@ -1,8 +1,6 @@
 package de.templum.routplaner.computing;
 
 import android.content.Context;
-import android.location.Location;
-import android.os.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +8,6 @@ import java.util.concurrent.Callable;
 
 import de.templum.routplaner.computing.annealing.AnnealingRouteCalculator;
 import de.templum.routplaner.computing.climber.HillClimberRouteCalculator;
-import de.templum.routplaner.computing.genetic.GeneticRouteCalculator;
 import de.templum.routplaner.model.RoutePoint;
 import de.templum.routplaner.util.Helper;
 import io.reactivex.Observable;
@@ -33,9 +30,9 @@ public class RouteFactory {
         mAlgorithms = new ArrayList<>();
 
         // Adding our available Algorithms
-        //mAlgorithms.add(new AnnealingRouteCalculator());
+        mAlgorithms.add(new AnnealingRouteCalculator());
         mAlgorithms.add(new HillClimberRouteCalculator());
-        mAlgorithms.add(new GeneticRouteCalculator());
+        //mAlgorithms.add(new GeneticRouteCalculator()); <-- Is completely functional, but its not usable on android. Blank Java Version works better
     }
 
     /**
@@ -53,7 +50,7 @@ public class RouteFactory {
                 List<Observable<List<RoutePoint>>> sources = new ArrayList<>();
 
                 sources.add(Observable.just(bestRoute));
-                for (RouteCalculator algorithm: mAlgorithms){
+                for (RouteCalculator algorithm : mAlgorithms) {
                     sources.add(algorithm.calculate(new ArrayList<>(bestRoute)));
                 }
 
@@ -62,7 +59,13 @@ public class RouteFactory {
         });
     }
 
-    private List<RoutePoint> transform(List<String> list){
+    /**
+     * Takes the user provided list and transforms it into our model.
+     *
+     * @param list user input
+     * @return user input in model form
+     */
+    private List<RoutePoint> transform(List<String> list) {
         return Helper.searchBy(mCtx, list);
     }
 }

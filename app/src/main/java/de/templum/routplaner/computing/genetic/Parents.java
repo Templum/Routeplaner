@@ -6,17 +6,17 @@ package de.templum.routplaner.computing.genetic;
  * Copyright (c) 2017 simon All rights reserved.
  */
 
-public class Parents {
+class Parents {
 
     private final Individual mMother;
     private final Individual mFather;
 
-    public Parents(Individual mother, Individual father) {
+    Parents(Individual mother, Individual father) {
         mMother = mother;
         mFather = father;
     }
 
-    public Individual reproduce() {
+    Individual reproduce() {
         return mMother.orderedCrossOver(mFather);
     }
 }

@@ -34,6 +34,9 @@ public class RouteFormActivity extends AppCompatActivity {
 
     private RouteListAdapter mAdapter;
 
+    /**
+     * Lifecycle
+     **/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,9 +69,14 @@ public class RouteFormActivity extends AppCompatActivity {
 
     @OnClick(R.id.form_submit)
     public void calculateRoute() {
-        Intent intent = new Intent(this, RouteViewActivity.class);
-        intent.putStringArrayListExtra(RouteViewActivity.ROUTE_LIST, mAdapter.getData());
-        startActivity(intent);
+        if (mAdapter.getItemCount() > 3) {
+            Intent intent = new Intent(this, RouteViewActivity.class);
+            intent.putStringArrayListExtra(RouteViewActivity.ROUTE_LIST, mAdapter.getData());
+            startActivity(intent);
+        } else {
+            Snackbar.make(mBottom, R.string.error_nothing_to_optimize, BaseTransientBottomBar.LENGTH_LONG).show();
+        }
+
     }
 
 

@@ -40,14 +40,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/route_view_header"
         android:layout_above="@+id/route_view_footer"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/activity_vertical_margin" />
+        android:layout_centerHorizontal="true" />
 
     <RelativeLayout
         android:id="@+id/route_view_footer"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_alignParentBottom="true"
         android:background="@color/divider">
         <TextView
@@ -62,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/route_label_footer"
+            android:layout_marginBottom="2dp"
             android:text="@string/route_view_value"
             android:textColor="@android:color/holo_green_dark"
             android:textAlignment="center"

@@ -1,7 +1,9 @@
 package de.templum.routplaner.computing.genetic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import de.templum.routplaner.model.RoutePoint;
 import de.templum.routplaner.util.Helper;
@@ -12,27 +14,29 @@ import de.templum.routplaner.util.Helper;
  * Copyright (c) 2017 simon All rights reserved.
  */
 
-public class Individual {
+class Individual {
+    private final Double MUTATION_RATE = 0.3;
     private final List<RoutePoint> mDna;
     private Double mFitness;
 
-    public Individual(List<RoutePoint> dna) {
+    Individual(List<RoutePoint> dna) {
         mDna = new ArrayList<>(dna);
     }
 
-    public Individual(Individual other) {
-        mDna = new ArrayList<>(other.mDna);
-    }
-
-    public void calculateFitness() {
+    void calculateFitness() {
         mFitness = Helper.calculateInverseDistance(mDna);
     }
 
-    public void mutate() {
-        //TODO:
+    void mutate() {
+        Random generator = new Random();
+        for (int i = 0; i < mDna.size(); i++) {
+            if (generator.nextDouble() < MUTATION_RATE) {
+                Collections.swap(mDna, i, Helper.getRandomNumberBetween(1, mDna.size() - 2));
+            }
+        }
     }
 
-    public Individual orderedCrossOver(Individual otherParent) {
+    Individual orderedCrossOver(Individual otherParent) {
         List<RoutePoint> childDna = new ArrayList<>(); // Important first and last position are immutable
         int start, end;
 
@@ -57,11 +61,11 @@ public class Individual {
         return new Individual(childDna);
     }
 
-    public List<RoutePoint> getDna() {
+    List<RoutePoint> getDna() {
         return mDna;
     }
 
-    public Double getFitness() {
+    Double getFitness() {
         return mFitness;
     }
 

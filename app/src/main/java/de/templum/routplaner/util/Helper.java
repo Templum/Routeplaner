@@ -42,7 +42,7 @@ public class Helper {
      * This method swaps two random points within the given route, but maintains the first and last entry of the list.
      * Because the first and last entry are immutable, the route needs to be at least 4.
      *
-     * @param route Route to modifiy
+     * @param route Route to modify
      */
     public static void swapRandomPoints(List<RoutePoint> route) {
         int posA, posB;
