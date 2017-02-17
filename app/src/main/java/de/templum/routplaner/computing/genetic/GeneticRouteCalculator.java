@@ -23,7 +23,7 @@ public class GeneticRouteCalculator implements RouteCalculator {
     private final String TAG = GeneticRouteCalculator.class.getCanonicalName();
 
     public GeneticRouteCalculator() {
-        mUniverse = new Universe(500);
+        mUniverse = new Universe(1000);
     }
 
     @Override
@@ -31,10 +31,13 @@ public class GeneticRouteCalculator implements RouteCalculator {
         return Observable.defer(new Callable<ObservableSource<? extends List<RoutePoint>>>() {
             @Override
             public ObservableSource<? extends List<RoutePoint>> call() throws Exception {
-                List<RoutePoint> result = mUniverse.evolveBetterRoute(initialRoute);
-                Log.i(TAG, "Finished Executing");
-                return Observable.just(result);
-
+                if(initialRoute.size() <= 0){
+                    return Observable.empty();
+                }else{
+                    List<RoutePoint> result = mUniverse.evolveBetterRoute(initialRoute);
+                    Log.i(TAG, "Finished Executing");
+                    return Observable.just(result);
+                }
             }
         }).subscribeOn(Schedulers.newThread());
     }

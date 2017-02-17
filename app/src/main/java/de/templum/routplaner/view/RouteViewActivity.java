@@ -68,6 +68,9 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
             mData = savedInstanceState.getStringArrayList(ROUTE_LIST);
         }
 
+        if(mData == null || mData.isEmpty())
+            super.onBackPressed();
+
         initialiseCalculatedRouteList();
     }
 
@@ -99,6 +102,7 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
 
     @Override
     public void onSubscribe(Disposable d) {
+        if(mSubscription != null) mSubscription.dispose();
         mSubscription = d;
         mProgress.setVisibility(View.VISIBLE);
     }
@@ -141,14 +145,12 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
     }
 
     private void initializeOptimization() {
-        if (mInitialRoute == null || mInitialRoute.isEmpty()) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    mInitialRoute = Helper.searchBy(RouteViewActivity.this, mData);
-                }
-            }).start();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mInitialRoute = Helper.searchBy(RouteViewActivity.this, mData);
+            }
+        }).start();
 
         mFactory.optimizeGivenRoute(mData)
                 .subscribeOn(Schedulers.computation())

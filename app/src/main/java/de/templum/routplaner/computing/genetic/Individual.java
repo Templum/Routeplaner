@@ -15,7 +15,7 @@ import de.templum.routplaner.util.Helper;
  */
 
 class Individual {
-    private final Double MUTATION_RATE = 0.3;
+    private final Double MUTATION_RATE = 0.45;
     private final List<RoutePoint> mDna;
     private Double mFitness;
 
@@ -29,21 +29,16 @@ class Individual {
 
     void mutate() {
         Random generator = new Random();
-        for (int i = 0; i < mDna.size(); i++) {
-            if (generator.nextDouble() < MUTATION_RATE) {
-                Collections.swap(mDna, i, Helper.getRandomNumberBetween(1, mDna.size() - 2));
-            }
+        if (generator.nextDouble() < MUTATION_RATE) {
+            Collections.shuffle(mDna.subList(1, mDna.size() - 2), generator);
         }
     }
 
     Individual orderedCrossOver(Individual otherParent) {
         List<RoutePoint> childDna = new ArrayList<>(); // Important first and last position are immutable
-        int start, end;
 
-        do {
-            start = Helper.getRandomNumberBetween(1, mDna.size() / 2);
-            end = Helper.getRandomNumberBetween(mDna.size() / 2, mDna.size() - 2);
-        } while (start == end);
+        int start = 1;
+        int end = mDna.size() / 2;
 
         for (int i = start; i < end; i++) {
             childDna.add(new RoutePoint(mDna.get(i)));

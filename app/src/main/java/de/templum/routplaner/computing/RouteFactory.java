@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 
 import de.templum.routplaner.computing.annealing.AnnealingRouteCalculator;
 import de.templum.routplaner.computing.climber.HillClimberRouteCalculator;
+import de.templum.routplaner.computing.genetic.GeneticRouteCalculator;
 import de.templum.routplaner.model.RoutePoint;
 import de.templum.routplaner.util.Helper;
 import io.reactivex.Observable;
@@ -32,7 +33,7 @@ public class RouteFactory {
         // Adding our available Algorithms
         mAlgorithms.add(new AnnealingRouteCalculator());
         mAlgorithms.add(new HillClimberRouteCalculator());
-        //mAlgorithms.add(new GeneticRouteCalculator()); <-- Is completely functional, but its not usable on android. Blank Java Version works better
+        mAlgorithms.add(new GeneticRouteCalculator());
     }
 
     /**
