@@ -32,7 +32,7 @@ class Universe {
 
     private Double mLastFitness = -1.0;
     private Integer mStagnateTime = 0;
-    private final Integer MAX_STAGNATE_TIME = 100;
+    private final Integer MAX_STAGNATE_TIME = 20;
 
     Universe(Integer popsize) {
         mPopulation = Collections.synchronizedList(new ArrayList<Individual>());
@@ -168,9 +168,6 @@ class Universe {
 
         mStagnateTime = (deltaImprovement == 0.0) ? mStagnateTime + 1 : 0;
         mLastFitness = oneToRuleThemAll.getFitness();
-
-        Log.d(TAG, "Last equals first " + mPopulation.get(0).getDna().get(0).equals(mPopulation.get(0).getDna().get(mPopulation.get(0).getDna().size() - 1)));
-        Log.d(TAG, "Current Improvement: " + deltaImprovement);
     }
 
     private Double calculateTotalFitness(){
