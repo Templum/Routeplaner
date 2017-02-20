@@ -75,6 +75,13 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.Rout
 
     }
 
+    @UiThread
+    public void clearItems(){
+        int size = mData.size() - 1;
+        mData.clear();
+        notifyItemRangeRemoved(0, size);
+    }
+
     private void appendItem(String item) {
         mData.remove(mData.size() - 1);
         mData.add(item);

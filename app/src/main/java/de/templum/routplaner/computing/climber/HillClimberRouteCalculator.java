@@ -23,9 +23,7 @@ public class HillClimberRouteCalculator implements RouteCalculator {
     private final Integer TIMES = 100000;
     private final String TAG = HillClimberRouteCalculator.class.getCanonicalName();
 
-    //TODO: Start multiple attempts
-    public HillClimberRouteCalculator() {
-    }
+    public HillClimberRouteCalculator() {}
 
     @Override
     public Observable<List<RoutePoint>> calculate(final List<RoutePoint> initialRoute) {

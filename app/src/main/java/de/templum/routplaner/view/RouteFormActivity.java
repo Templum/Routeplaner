@@ -52,7 +52,7 @@ public class RouteFormActivity extends AppCompatActivity {
                 Place place = PlacePicker.getPlace(this, data);
                 mAdapter.addItem(place.getAddress().toString());
             } else {
-                Snackbar.make(mBottom, R.string.error_something_went_wrong, BaseTransientBottomBar.LENGTH_LONG).show();
+                Snackbar.make(mBottom, R.string.error_location_could_not_been_added, BaseTransientBottomBar.LENGTH_LONG).show();
             }
         }
     }
@@ -67,6 +67,12 @@ public class RouteFormActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.form_fab_remove)
+    public void clearList(){
+        mAdapter.clearItems();
+        Snackbar.make(mBottom, R.string.notification_deleted_route, BaseTransientBottomBar.LENGTH_LONG).show();
+    }
+
     @OnClick(R.id.form_submit)
     public void calculateRoute() {
         if (mAdapter.getItemCount() > 3) {
@@ -78,7 +84,6 @@ public class RouteFormActivity extends AppCompatActivity {
         }
 
     }
-
 
     private void initialiseRouteList() {
         mAdapter = new RouteListAdapter(this);
