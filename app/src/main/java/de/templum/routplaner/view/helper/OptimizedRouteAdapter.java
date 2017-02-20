@@ -21,20 +21,20 @@ import de.templum.routplaner.model.RoutePoint;
  * Copyright (c) 2017 simon All rights reserved.
  */
 
-public class CalculatedRouteAdapter extends RecyclerView.Adapter<CalculatedRouteAdapter.RouteItem> {
+public class OptimizedRouteAdapter extends RecyclerView.Adapter<OptimizedRouteAdapter.RouteItem> {
 
     private List<RoutePoint> mData = new ArrayList<>();
 
-    public CalculatedRouteAdapter() {
+    public OptimizedRouteAdapter() {
     }
 
     @Override
-    public CalculatedRouteAdapter.RouteItem onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new CalculatedRouteAdapter.RouteItem(LayoutInflater.from(parent.getContext()).inflate(R.layout.calculated_route_item, parent, false));
+    public OptimizedRouteAdapter.RouteItem onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new OptimizedRouteAdapter.RouteItem(LayoutInflater.from(parent.getContext()).inflate(R.layout.calculated_route_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(CalculatedRouteAdapter.RouteItem holder, int position) {
+    public void onBindViewHolder(OptimizedRouteAdapter.RouteItem holder, int position) {
         RoutePoint routePoint = mData.get(position);
 
         holder.setText(routePoint.toString());

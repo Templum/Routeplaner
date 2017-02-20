@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -19,10 +20,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.templum.routplaner.R;
-import de.templum.routplaner.view.helper.RouteListAdapter;
+import de.templum.routplaner.view.helper.OnSwipeListener;
+import de.templum.routplaner.view.helper.SwipeToDeleteCallback;
+import de.templum.routplaner.view.helper.UserInputRouteAdapter;
 
 
-public class RouteFormActivity extends AppCompatActivity {
+public class RouteFormActivity extends AppCompatActivity implements OnSwipeListener {
 
     private static final Integer LOCATION_PICKER_INTENT = 1337;
 
@@ -32,7 +35,9 @@ public class RouteFormActivity extends AppCompatActivity {
     @Bind(R.id.form_submit_container)
     RelativeLayout mBottom;
 
-    private RouteListAdapter mAdapter;
+    private UserInputRouteAdapter mAdapter;
+    private SwipeToDeleteCallback mCallback;
+    private ItemTouchHelper mItemTouchHelper;
 
     /**
      * Lifecycle
@@ -85,10 +90,24 @@ public class RouteFormActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRemove(int position) {
+        mAdapter.removeItem(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mAdapter.getItemCount();
+    }
+
     private void initialiseRouteList() {
-        mAdapter = new RouteListAdapter(this);
+        mAdapter = new UserInputRouteAdapter(this);
         mList.setLayoutManager(new LinearLayoutManager(this));
         mList.setAdapter(mAdapter);
         mList.setHasFixedSize(true);
+
+        mCallback = new SwipeToDeleteCallback(this, this);
+        mItemTouchHelper = new ItemTouchHelper(mCallback);
+        mItemTouchHelper.attachToRecyclerView(mList);
     }
 }

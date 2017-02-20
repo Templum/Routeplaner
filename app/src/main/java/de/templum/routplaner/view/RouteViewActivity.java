@@ -24,7 +24,7 @@ import de.templum.routplaner.R;
 import de.templum.routplaner.computing.RouteFactory;
 import de.templum.routplaner.model.RoutePoint;
 import de.templum.routplaner.util.Helper;
-import de.templum.routplaner.view.helper.CalculatedRouteAdapter;
+import de.templum.routplaner.view.helper.OptimizedRouteAdapter;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -48,7 +48,7 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
     private List<RoutePoint> mOptimizedRoute = new ArrayList<>();
     private RouteFactory mFactory = new RouteFactory(this);
     private Disposable mSubscription;
-    private CalculatedRouteAdapter mAdapter;
+    private OptimizedRouteAdapter mAdapter;
 
     /**
      * Lifecycle
@@ -138,7 +138,7 @@ public class RouteViewActivity extends AppCompatActivity implements Observer<Lis
     }
 
     private void initialiseCalculatedRouteList() {
-        mAdapter = new CalculatedRouteAdapter();
+        mAdapter = new OptimizedRouteAdapter();
         mList.setLayoutManager(new LinearLayoutManager(this));
         mList.setAdapter(mAdapter);
         mList.setHasFixedSize(true);

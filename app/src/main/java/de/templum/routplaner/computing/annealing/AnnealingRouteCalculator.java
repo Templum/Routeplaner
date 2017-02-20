@@ -25,9 +25,7 @@ public class AnnealingRouteCalculator implements RouteCalculator {
     private final String TAG = AnnealingRouteCalculator.class.getCanonicalName();
     private Double TEMPERATURE = 1538.0;
 
-    //TODO: Start multiple attempts
-    public AnnealingRouteCalculator() {
-    }
+    public AnnealingRouteCalculator() {}
 
     @Override
     public Observable<List<RoutePoint>> calculate(final List<RoutePoint> initialRoute) {

@@ -22,7 +22,7 @@ import de.templum.routplaner.R;
  * Copyright (c) 2017 simon All rights reserved.
  */
 
-public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.RouteItem> {
+public class UserInputRouteAdapter extends RecyclerView.Adapter<UserInputRouteAdapter.RouteItem> {
 
     private final int START_OR_END = 0;
     private final int STATION = 1;
@@ -30,13 +30,13 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.Rout
     private Context mCtx;
 
 
-    public RouteListAdapter(Context context) {
+    public UserInputRouteAdapter(Context context) {
         mData = new ArrayList<>();
         mCtx = context;
     }
 
     @Override
-    public RouteListAdapter.RouteItem onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UserInputRouteAdapter.RouteItem onCreateViewHolder(ViewGroup parent, int viewType) {
         RouteItem container = new RouteItem(LayoutInflater.from(parent.getContext()).inflate(R.layout.route_item, parent, false));
         if (viewType == START_OR_END) {
             container.setDrawable(START_OR_END);
@@ -76,10 +76,22 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.Rout
     }
 
     @UiThread
+    public void updateItem(int position, String item){
+        mData.remove(position);
+        mData.add(position, item);
+        notifyItemChanged(position);
+    }
+
+    @UiThread
+    public void removeItem(int position){
+        mData.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    @UiThread
     public void clearItems(){
-        int size = mData.size() - 1;
         mData.clear();
-        notifyItemRangeRemoved(0, size);
+        notifyDataSetChanged();
     }
 
     private void appendItem(String item) {
