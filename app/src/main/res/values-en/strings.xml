@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Routeplaner</string>
+    <string name="error_google_places_not_reachable">This application depends on the google places service to work. But its (currently) not available!</string>
+    <string name="error_location_could_not_been_added">The chosen location could not been added to the route. Please try again!</string>
+    <string name="error_not_deletable">Its not possible to delete either the first or the last position of a route. Please delete the whole route instead!</string>
+    <string name="error_nothing_to_optimize">The entered route is to short and therefore can not be improve any further!</string>
+    <string name="form_header_text">Create an Route</string>
+    <string name="error_something_went_wrong">An exception happened during the execution. Please try again!</string>
+    <string name="form_submit_btn">Calculate best Route</string>
+    <string name="notification_deleted_route">The route was cleared from entries</string>
+    <string name="route_view_header">Optimized Route</string>
+    <string name="route_view_label">Difference to original route:</string>
+    <string name="route_view_value">Calculating…</string>
+</resources>

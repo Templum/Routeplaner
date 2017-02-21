@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Routeplaner</string>
+    <string name="error_google_places_not_reachable">Diese Anwendung benötigt den Google Places Service um zufunktioniert, allerdings ist dieser (momentan) nicht verfügbar!</string>
+    <string name="error_location_could_not_been_added">Der ausgewählte Ort konnte nicht zur Route hinzugefügt werden. Bitte versuchen Sie es erneut!</string>
+    <string name="error_not_deletable">Es ist nicht möglich den Anfang oder das Ende einer Route, zu löschen. Löschen Sie stattdessen die gesamte Route!</string>
+    <string name="error_nothing_to_optimize">Die eingegebene Route ist zu kurz und kann daher nicht weiter verbessert werden!</string>
+    <string name="error_something_went_wrong">Es ist ein Fehler während der Ausführung aufgetreten. Bitte versuchen Sie es erneut!</string>
+    <string name="form_header_text">Erstellen Sie eine Route</string>
+    <string name="form_submit_btn">Berechne kürzeste Route</string>
+    <string name="notification_deleted_route">Die Route wurde geleert</string>
+    <string name="route_view_header">Optimierte Route</string>
+    <string name="route_view_label">Differenz zur ursprünglichen Route:</string>
+    <string name="route_view_value">Berechne…</string>
+</resources>
