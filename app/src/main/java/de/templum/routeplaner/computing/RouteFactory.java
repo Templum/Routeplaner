@@ -1,4 +1,4 @@
-package de.templum.routplaner.computing;
+package de.templum.routeplaner.computing;
 
 import android.content.Context;
 
@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import de.templum.routplaner.computing.annealing.AnnealingRouteCalculator;
-import de.templum.routplaner.computing.climber.HillClimberRouteCalculator;
-import de.templum.routplaner.computing.genetic.GeneticRouteCalculator;
-import de.templum.routplaner.model.RoutePoint;
-import de.templum.routplaner.util.Helper;
+import de.templum.routeplaner.computing.annealing.AnnealingRouteCalculator;
+import de.templum.routeplaner.computing.climber.HillClimberRouteCalculator;
+import de.templum.routeplaner.computing.genetic.GeneticRouteCalculator;
+import de.templum.routeplaner.model.RoutePoint;
+import de.templum.routeplaner.util.Helper;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 

@@ -1,4 +1,4 @@
-package de.templum.routplaner.view;
+package de.templum.routeplaner.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,11 +20,11 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.templum.routplaner.R;
-import de.templum.routplaner.computing.RouteFactory;
-import de.templum.routplaner.model.RoutePoint;
-import de.templum.routplaner.util.Helper;
-import de.templum.routplaner.view.helper.OptimizedRouteAdapter;
+import de.templum.routeplaner.R;
+import de.templum.routeplaner.computing.RouteFactory;
+import de.templum.routeplaner.model.RoutePoint;
+import de.templum.routeplaner.util.Helper;
+import de.templum.routeplaner.view.helper.OptimizedRouteAdapter;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

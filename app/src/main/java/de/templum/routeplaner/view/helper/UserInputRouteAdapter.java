@@ -1,4 +1,4 @@
-package de.templum.routplaner.view.helper;
+package de.templum.routeplaner.view.helper;
 
 import android.content.Context;
 import android.support.annotation.UiThread;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.templum.routplaner.R;
+import de.templum.routeplaner.R;
 
 /**
  * An Adapter for displaying the route during creation.

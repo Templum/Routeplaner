@@ -1,12 +1,12 @@
-package de.templum.routplaner.computing.genetic;
+package de.templum.routeplaner.computing.genetic;
 
 import android.util.Log;
 
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import de.templum.routplaner.computing.RouteCalculator;
-import de.templum.routplaner.model.RoutePoint;
+import de.templum.routeplaner.computing.RouteCalculator;
+import de.templum.routeplaner.model.RoutePoint;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.schedulers.Schedulers;

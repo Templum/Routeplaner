@@ -1,4 +1,4 @@
-package de.templum.routplaner.view.helper;
+package de.templum.routeplaner.view.helper;
 
 /**
  * Created by simon on 20.02.2017.

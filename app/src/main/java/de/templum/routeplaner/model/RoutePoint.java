@@ -1,4 +1,4 @@
-package de.templum.routplaner.model;
+package de.templum.routeplaner.model;
 
 import android.location.Location;
 

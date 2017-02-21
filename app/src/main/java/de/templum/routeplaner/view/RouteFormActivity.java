@@ -1,4 +1,4 @@
-package de.templum.routplaner.view;
+package de.templum.routeplaner.view;
 
 
 import android.content.Intent;
@@ -19,10 +19,10 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.templum.routplaner.R;
-import de.templum.routplaner.view.helper.OnSwipeListener;
-import de.templum.routplaner.view.helper.SwipeToDeleteCallback;
-import de.templum.routplaner.view.helper.UserInputRouteAdapter;
+import de.templum.routeplaner.R;
+import de.templum.routeplaner.view.helper.OnSwipeListener;
+import de.templum.routeplaner.view.helper.SwipeToDeleteCallback;
+import de.templum.routeplaner.view.helper.UserInputRouteAdapter;
 
 
 public class RouteFormActivity extends AppCompatActivity implements OnSwipeListener {

@@ -1,12 +1,12 @@
-package de.templum.routplaner.computing.genetic;
+package de.templum.routeplaner.computing.genetic;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import de.templum.routplaner.model.RoutePoint;
-import de.templum.routplaner.util.Helper;
+import de.templum.routeplaner.model.RoutePoint;
+import de.templum.routeplaner.util.Helper;
 
 /**
  * This class represents an Individual made of an dna and a fitness.

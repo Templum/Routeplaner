@@ -1,4 +1,4 @@
-package de.templum.routplaner.computing.genetic;
+package de.templum.routeplaner.computing.genetic;
 
 /**
  * This class represent a couple of parents.

@@ -4,7 +4,7 @@
     android:id="@+id/activity_route_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.templum.routplaner.view.RouteViewActivity">
+    tools:context="de.templum.routeplaner.view.RouteViewActivity">
 
     <RelativeLayout
         android:id="@+id/route_view_header"

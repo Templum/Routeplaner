@@ -1,4 +1,4 @@
-package de.templum.routplaner.view.helper;
+package de.templum.routeplaner.view.helper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import de.templum.routplaner.R;
+import de.templum.routeplaner.R;
 
 /**
  * Created by simon on 20.02.2017.

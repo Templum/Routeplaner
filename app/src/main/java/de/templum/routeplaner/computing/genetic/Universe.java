@@ -1,19 +1,13 @@
-package de.templum.routplaner.computing.genetic;
-
-import android.util.Log;
+package de.templum.routeplaner.computing.genetic;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
-import de.templum.routplaner.model.RoutePoint;
-import de.templum.routplaner.util.Helper;
+import de.templum.routeplaner.model.RoutePoint;
+import de.templum.routeplaner.util.Helper;
 
 /**
  * This class represents the universe in which the solution is being evolved.

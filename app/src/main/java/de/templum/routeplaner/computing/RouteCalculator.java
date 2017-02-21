@@ -1,8 +1,8 @@
-package de.templum.routplaner.computing;
+package de.templum.routeplaner.computing;
 
 import java.util.List;
 
-import de.templum.routplaner.model.RoutePoint;
+import de.templum.routeplaner.model.RoutePoint;
 import io.reactivex.Observable;
 
 /**

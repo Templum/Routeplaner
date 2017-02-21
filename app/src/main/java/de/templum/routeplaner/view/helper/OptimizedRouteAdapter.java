@@ -1,4 +1,4 @@
-package de.templum.routplaner.view.helper;
+package de.templum.routeplaner.view.helper;
 
 import android.support.annotation.UiThread;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +12,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.templum.routplaner.R;
-import de.templum.routplaner.model.RoutePoint;
+import de.templum.routeplaner.R;
+import de.templum.routeplaner.model.RoutePoint;
 
 /**
  * An adapter which displays the optimized route.

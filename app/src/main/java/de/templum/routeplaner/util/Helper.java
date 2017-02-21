@@ -1,4 +1,4 @@
-package de.templum.routplaner.util;
+package de.templum.routeplaner.util;
 
 import android.content.Context;
 import android.location.Address;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-import de.templum.routplaner.model.RoutePoint;
+import de.templum.routeplaner.model.RoutePoint;
 
 /**
  * This class shares helper methods.
